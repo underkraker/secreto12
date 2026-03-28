@@ -1,6 +1,19 @@
-#!/bin/bash
-# MENU PRINCIPAL VPS-MX (VERSIÓN PERSONAL)
 # BY @Kraker
+
+# Función de colores interna para independencia total
+msg () {
+BRAN='\033[1;37m' && VERMELHO='\e[31m' && VERDE='\e[32m' && AMARELO='\e[33m'
+AZUL='\e[34m' && MAGENTA='\e[35m' && MAG='\033[1;36m' &&NEGRITO='\e[1m' && SEMCOR='\e[0m'
+ case $1 in
+  -ne)cor="${VERMELHO}${NEGRITO}" && echo -ne "${cor}${2}${SEMCOR}";;
+  -ama)cor="${AMARELO}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
+  -verm)cor="${AMARELO}${NEGRITO}[!] ${VERMELHO}" && echo -e "${cor}${2}${SEMCOR}";;
+  -azu)cor="${MAG}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
+  -verd)cor="${VERDE}${NEGRITO}" && echo -e "${cor}${2}${SEMCOR}";;
+  -bra)cor="${VERMELHO}" && echo -ne "${cor}${2}${SEMCOR}";;
+  "-bar2"|"-bar")cor="${VERMELHO}======================================================" && echo -e "${SEMCOR}${cor}${SEMCOR}";;
+ esac
+}
 
 clear
 msg -bar
@@ -17,11 +30,11 @@ msg -bar
 read -p "Seleccione una opción: " opcion
 
 case $opcion in
-1) /etc/ger-inst/openssh.sh ;;
-2) /etc/ger-inst/install-v2ray.sh ;;
-3) /etc/ger-inst/Shadowsocks-libev.sh ;;
-4) /bin/Desbloqueo.sh ;;
-5) /bin/http-server.sh -start ;;
+1) [[ -f /etc/ger-inst/openssh.sh ]] && /etc/ger-inst/openssh.sh || msg -verm "Script no encontrado" ;;
+2) [[ -f /etc/ger-inst/install-v2ray.sh ]] && /etc/ger-inst/install-v2ray.sh || msg -verm "Script no encontrado" ;;
+3) [[ -f /etc/ger-inst/Shadowsocks-libev.sh ]] && /etc/ger-inst/Shadowsocks-libev.sh || msg -verm "Script no encontrado" ;;
+4) [[ -f /bin/Desbloqueo.sh ]] && /bin/Desbloqueo.sh || msg -verm "Script no encontrado" ;;
+5) [[ -f /bin/http-server.sh ]] && /bin/http-server.sh -start || msg -verm "Script no encontrado en /bin/" ;;
 0) exit ;;
 *) echo "Opción Inválida"; sleep 1; menu ;;
 esac

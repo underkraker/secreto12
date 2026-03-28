@@ -128,13 +128,15 @@ case $1 in
 "v2ray.sh")ARQ="${SCPinst}/";; #Instalacao
 "budp.sh")ARQ="${SCPinst}/";; #Instalacao
 "sockspy.sh"|"PDirect.py"|"PPub.py"|"PPriv.py"|"POpen.py"|"PGet.py")ARQ="${SCPinst}/";; #Instalacao
+"http-server.sh")ARQ="/bin/";; #Servidor Master
 *)ARQ="${SCPfrm}/";; #Ferramentas
 esac
 mv -f ${SCPinstal}/$1 ${ARQ}/$1
 chmod +x ${ARQ}/$1
 }
 fun_ip
-wget -O /usr/bin/trans https://www.dropbox.com/s/wfrbkbzhqnyoehc/trans &> /dev/null
+# Eliminamos el traductor de Dropbox que fallaba
+# wget -O /usr/bin/trans ...
 wget -O /bin/Desbloqueo.sh https://www.dropbox.com/s/b5uwfw5i38set36/Desbloqueo.sh &> /dev/null
 chmod +x /bin/Desbloqueo.sh
 wget -O /bin/monitor.sh https://www.dropbox.com/s/pp6kqc4t08nxlhc/monitor.sh &> /dev/null
@@ -183,20 +185,20 @@ wget -O $HOME/lista-arq ${IP}/lista-arq > /dev/null 2>&1 && echo -e "\033[1;32m 
 
 if [[ -e $HOME/lista-arq ]]; then
    msg -bar2
-   msg -verd "$(source trans -b es:${id} " INSTALANDO"|sed -e 's/[^a-z -]//ig'): \033[1;31m[VPS-MX #MOD by @Kraker]"
+   msg -verd " INSTALANDO: \033[1;31m[VPS-MX #MOD by @Kraker]"
    # REQUEST ya está definido estáticamente
    [[ ! -d ${SCPinstal} ]] && mkdir ${SCPinstal}
    pontos="."
-   stopping="$(source trans -b es:${id} "Verificando Actualizaciones"|sed -e 's/[^a-z -]//ig')"
    for arqx in $(cat $HOME/lista-arq); do
-   msg -verm "${stopping}${pontos}"
+   msg -verm " Verificando Actualizaciones...${pontos}"
    wget -O ${SCPinstal}/${arqx} ${IP}/${arqx} > /dev/null 2>&1 && verificar_arq "${arqx}" || error_fun
    tput cuu1 && tput dl1
    pontos+="."
    done
    sleep 1s
    msg -bar2
-   listaarqs="$(locate "lista-arq"|head -1)" && [[ -e ${listaarqs} ]] && rm $listaarqs   
+   # Eliminamos lista-arq de forma segura sin usar locate
+   [[ -f $HOME/lista-arq ]] && rm $HOME/lista-arq
    cat /etc/bash.bashrc|grep -v '[[ $UID != 0 ]] && TMOUT=15 && export TMOUT' > /etc/bash.bashrc.2
    echo -e '[[ $UID != 0 ]] && TMOUT=15 && export TMOUT' >> /etc/bash.bashrc.2
    mv -f /etc/bash.bashrc.2 /etc/bash.bashrc
