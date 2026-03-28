@@ -173,11 +173,18 @@ REQUEST="Oficial" # No se usa en GitHub raw but kept for structure
 echo "$IP" > /usr/bin/vendor_code
 sleep 1s
 function_verify
-updatedb
-if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") ]]; then
+# Descargar la lista de archivos de GitHub
+msg -ne "# Conectando a Repositorio # : "
+wget -O $HOME/lista-arq ${IP}/lista-arq > /dev/null 2>&1 && echo -e "\033[1;32m OK" || {
+   echo -e "\033[1;31m Error"
+   invalid_key
+   exit
+}
+
+if [[ -e $HOME/lista-arq ]]; then
    msg -bar2
-   msg -verd "$(source trans -b es:${id} " INSTALANDO"|sed -e 's/[^a-z -]//ig'): \033[1;31m[VPS-MX #MOD by @Kalix1]"
-   REQUEST=$(ofus "$Key"|cut -d'/' -f2)
+   msg -verd "$(source trans -b es:${id} " INSTALANDO"|sed -e 's/[^a-z -]//ig'): \033[1;31m[VPS-MX #MOD by @Kraker]"
+   # REQUEST ya está definido estáticamente
    [[ ! -d ${SCPinstal} ]] && mkdir ${SCPinstal}
    pontos="."
    stopping="$(source trans -b es:${id} "Verificando Actualizaciones"|sed -e 's/[^a-z -]//ig')"
