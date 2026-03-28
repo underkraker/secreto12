@@ -81,7 +81,7 @@ pv="$(echo ${idioma[$selection]}|cut -d' ' -f1)"
 byinst="true"
 }
 install_fim () {
-msg -ama "$(source trans -b es:${id} "Instalacion Completa, Utilize los Comandos"|sed -e 's/[^a-z -]//ig')" && msg bar2
+msg -ama "Instalacion Completa, Utilize los Comandos" && msg bar2
 
 msg -bar2
 }
@@ -137,11 +137,11 @@ chmod +x ${ARQ}/$1
 fun_ip
 # Eliminamos el traductor de Dropbox que fallaba
 # wget -O /usr/bin/trans ...
-wget -O /bin/Desbloqueo.sh https://www.dropbox.com/s/b5uwfw5i38set36/Desbloqueo.sh &> /dev/null
-chmod +x /bin/Desbloqueo.sh
-wget -O /bin/monitor.sh https://www.dropbox.com/s/pp6kqc4t08nxlhc/monitor.sh &> /dev/null
-chmod +x /bin/monitor.sh
-wget -O /var/www/html/estilos.css https://www.dropbox.com/s/vzx4rfxqds1btt4/estilos.css &> /dev/null
+# Descargamos componentes internos desde el repositorio propio (Bypass de Dropbox)
+wget -O /bin/Desbloqueo.sh ${IP}/Desbloqueo.sh &> /dev/null && chmod +x /bin/Desbloqueo.sh
+wget -O /bin/monitor.sh ${IP}/monitor.sh &> /dev/null && chmod +x /bin/monitor.sh
+mkdir -p /var/www/html/
+wget -O /var/www/html/estilos.css ${IP}/estilos.css &> /dev/null
 clear
 msg -bar2
 echo -e "\e[97m\033[1;41m       =====>>►► 🐲 PANEL VPS•MX 🐲 ◄◄<<=====       \033[1;37m"
@@ -150,7 +150,7 @@ msg -bar2
 [[ ${#1} -gt 2 ]] && funcao_idioma || id="$1"
  }
 error_fun () {
-msg -bar2 && msg -verm "$(source trans -b es:${id} "Esta Key Es de Otro Servidor Por Lo Tanto Fue Excluida"|sed -e 's/[^a-z -]//ig') " && msg -bar2
+msg -bar2 && msg -verm "Esta Key Es de Otro Servidor Por Lo Tanto Fue Excluida" && msg -bar2
 [[ -d ${SCPinstal} ]] && rm -rf ${SCPinstal}
 exit 1
 }
