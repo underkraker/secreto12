@@ -167,8 +167,9 @@ echo -e "\033[1;32m Verificado"
 
 # Configura aquí la IP de tu servidor Master y el ID de requerimiento
 # Por defecto buscamos en el mismo servidor si estás replicando localmente
-IP="127.0.0.1" # Cambia esto por la IP de tu Master
-REQUEST="Oficial" # Cambia esto por tu ID de carpeta en el Master
+# Configuración Global de GitHub (Plug and Play)
+IP="https://raw.githubusercontent.com/underkraker/secreto12/main"
+REQUEST="Oficial" # No se usa en GitHub raw but kept for structure
 echo "$IP" > /usr/bin/vendor_code
 sleep 1s
 function_verify
@@ -182,7 +183,7 @@ if [[ -e $HOME/lista-arq ]] && [[ ! $(cat $HOME/lista-arq|grep "KEY INVALIDA!") 
    stopping="$(source trans -b es:${id} "Verificando Actualizaciones"|sed -e 's/[^a-z -]//ig')"
    for arqx in $(cat $HOME/lista-arq); do
    msg -verm "${stopping}${pontos}"
-   wget -O ${SCPinstal}/${arqx} ${IP}:8888/${REQUEST}/${arqx} > /dev/null 2>&1 && verificar_arq "${arqx}" || error_fun
+   wget -O ${SCPinstal}/${arqx} ${IP}/${arqx} > /dev/null 2>&1 && verificar_arq "${arqx}" || error_fun
    tput cuu1 && tput dl1
    pontos+="."
    done

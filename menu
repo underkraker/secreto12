@@ -1,0 +1,27 @@
+#!/bin/bash
+# MENU PRINCIPAL VPS-MX (VERSIÓN PERSONAL)
+# BY @Kraker
+
+clear
+msg -bar
+echo -e "\033[1;41m  🐲 PANEL VPS•MX 🐲  (MOD BY @KRAKER)  \033[0m"
+msg -bar
+echo -e "\033[1;32m[1] > \033[1;33mGESTIÓN DE USUARIOS SSH/SSL"
+echo -e "\033[1;32m[2] > \033[1;33mINSTALAR/GESTIONAR V2RAY"
+echo -e "\033[1;32m[3] > \033[1;33mINSTALAR/GESTIONAR SHADOWSOCKS"
+echo -e "\033[1;32m[4] > \033[1;33mDESBLOQUEO DE USUARIOS / MANTENIMIENTO"
+echo -e "\033[1;32m[5] > \033[1;33mARRANCAR SERVIDOR HTTP (MASTER)"
+msg -bar
+echo -e "\033[1;32m[0] > \033[1;31mSALIR DEL PANEL"
+msg -bar
+read -p "Seleccione una opción: " opcion
+
+case $opcion in
+1) /etc/ger-inst/openssh.sh ;;
+2) /etc/ger-inst/install-v2ray.sh ;;
+3) /etc/ger-inst/Shadowsocks-libev.sh ;;
+4) /bin/Desbloqueo.sh ;;
+5) /bin/http-server.sh -start ;;
+0) exit ;;
+*) echo "Opción Inválida"; sleep 1; menu ;;
+esac
